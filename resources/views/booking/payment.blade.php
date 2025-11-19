@@ -150,14 +150,14 @@
           </div>
         </div>
 
-        <form class="upload-box mt-4" action="{{ route('booking.payment.upload', $pengunjung->id) }}" method="POST" enctype="multipart/form-data">
+        <form id="paymentForm" class="upload-box mt-4" action="{{ route('booking.payment.upload', $pengunjung->id) }}" method="POST" enctype="multipart/form-data">
           @csrf
           <label class="fw-bold mb-1">Upload Bukti Pembayaran</label>
-          <input type="file" name="bukti_pembayaran" accept=".jpg,.jpeg,.png,.pdf" required>
+          <input type="file" id="buktiPembayaran" name="bukti_pembayaran" accept=".jpg,.jpeg,.png,.pdf" required>
           <small class="text-muted">Format yang diperbolehkan: JPG, PNG, atau PDF.</small>
 
           <div class="mt-3">
-            <button type="submit" class="btn-maroon">Kirim Bukti</button>
+            <button type="button" id="submitPayment" class="btn-maroon">Kirim Bukti</button>
           </div>
         </form>
 
@@ -247,3 +247,122 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+// Show success message if exists
+@if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#a0203c',
+        confirmButtonText: 'OK',
+        timer: 3000
+    });
+@endif
+
+// Show error message if exists
+@if(session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        text: '{{ session('error') }}',
+        confirmButtonColor: '#a0203c',
+        confirmButtonText: 'OK'
+    });
+@endif
+
+// Show validation errors if exists
+@if($errors->any())
+    Swal.fire({
+        icon: 'error',
+        title: 'Terjadi Kesalahan!',
+        html: '<ul style="text-align: left;">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>',
+        confirmButtonColor: '#a0203c',
+        confirmButtonText: 'OK'
+    });
+@endif
+
+document.getElementById('submitPayment').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const fileInput = document.getElementById('buktiPembayaran');
+    const file = fileInput.files[0];
+    
+    // Check if file is selected
+    if (!file) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Peringatan!',
+            text: 'Silakan pilih file bukti pembayaran terlebih dahulu.',
+            confirmButtonColor: '#a0203c',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    
+    // Get file name and size
+    const fileName = file.name;
+    const fileSize = (file.size / 1024).toFixed(2); // Convert to KB
+    
+    Swal.fire({
+        title: 'Konfirmasi Pembayaran',
+        html: `
+            <div style="text-align: left; padding: 10px;">
+                <p style="margin-bottom: 10px;"><strong>Apakah Anda yakin ingin mengirim bukti pembayaran?</strong></p>
+                <hr style="margin: 15px 0;">
+                <p style="margin: 8px 0;"><strong>File:</strong> ${fileName}</p>
+                <p style="margin: 8px 0;"><strong>Ukuran:</strong> ${fileSize} KB</p>
+                <hr style="margin: 15px 0;">
+                <p style="color: #666; font-size: 0.9em; margin-top: 10px;">
+                    Pastikan bukti pembayaran yang Anda upload sudah benar dan jelas.
+                </p>
+            </div>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#a0203c',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Kirim!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true,
+        customClass: {
+            popup: 'swal-wide'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading
+            Swal.fire({
+                title: 'Mengirim...',
+                text: 'Mohon tunggu, sedang mengupload bukti pembayaran.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Submit the form
+            document.getElementById('paymentForm').submit();
+        }
+    });
+});
+
+// Preview file name when selected
+document.getElementById('buktiPembayaran').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const fileSize = (file.size / 1024).toFixed(2);
+        console.log(`File selected: ${file.name} (${fileSize} KB)`);
+    }
+});
+</script>
+
+<style>
+.swal-wide {
+    width: 500px !important;
+}
+</style>
+@endpush

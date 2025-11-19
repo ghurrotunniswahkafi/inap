@@ -8,6 +8,9 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -46,6 +49,7 @@
 
 
     <!-- Alert pesan sukses / error -->
+    @if (!request()->routeIs('booking.payment'))
     <div class="container mt-3">
         @if (session('success'))
             <div class="alert alert-success">
@@ -64,6 +68,7 @@
             </div>
         @endif
     </div>
+    @endif
 
     <!-- Konten utama -->
     <main class="container">
@@ -72,5 +77,10 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    @stack('scripts')
 </body>
 </html>
