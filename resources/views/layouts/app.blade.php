@@ -18,6 +18,32 @@
     .btn-accent{background:var(--accent); border:none; color:#fff}
     .rounded-panel{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
   </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesma Booking System</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "Segoe UI", sans-serif;
+        }
+        nav.navbar {
+            background-color: #003366;
+        }
+        nav a.navbar-brand {
+            color: white !important;
+        }
+        .container {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
   <nav class="d-flex justify-content-between align-items-center px-4 py-2 topbar mb-3">
@@ -26,12 +52,47 @@
         $logoPath = public_path('img/logo.png');
         $logoUrl = file_exists($logoPath) ? asset('img/logo.png') . '?v=' . filemtime($logoPath) : null;
       @endphp
-
       <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
         @if($logoUrl)
           <img src="{{ $logoUrl }}" alt="logo" style="width:40px;height:40px;object-fit:cover;border-radius:6px">
         @else
           <div style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.08);border-radius:6px;font-weight:600">P</div>
+    <!-- Header Peach (match lebar .container / stepper) -->
+    @if (!request()->routeIs('booking.payment'))
+    <header style="background:transparent; padding-top:16px; padding-bottom:0;">
+        <div class="container">
+            <div style="
+                background:#f1cfc4;
+                border-radius:18px;
+                padding:24px 24px;">
+                <h1 style="font-weight:800; font-size:36px; color:#111; margin:0;">
+                    PESMA Booking Form
+                </h1>
+            </div>
+        </div>
+    </header>
+@endif
+
+
+
+    <!-- Alert pesan sukses / error -->
+    @if (!request()->routeIs('booking.payment'))
+    <div class="container mt-3">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
         <span style="font-weight:600;color:#fff">Admin Penginapan</span>
       </a>
@@ -84,10 +145,22 @@
         @if($errors->any())
           <div class="alert alert-danger"><ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul></div>
         @endif
+    @endif
 
         @yield('content')
+
       </div>
     </div>
   </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    @stack('scripts')
+>>>>>>> main
 </body>
 </html>

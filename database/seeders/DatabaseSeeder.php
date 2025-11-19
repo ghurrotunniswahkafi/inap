@@ -19,5 +19,16 @@ class DatabaseSeeder extends Seeder
             MenuPesmaBogaSeeder::class,
             BerandaSeeder::class,
         ]);
+        // User::factory(10)->create();
+        $this->call(KamarSeeder::class);
+        
+        // Create test user only if it doesn't exist
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Test User',
+                'password' => bcrypt('password'),
+            ]
+        );
     }
 }
