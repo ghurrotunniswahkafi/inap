@@ -35,6 +35,7 @@ class BookingController extends Controller
             'check_in'        => 'nullable|date',
             'check_out'       => 'nullable|date|after:check_in',
             'no_telp'         => 'nullable|string',
+            'jumlah_kamar'    => 'nullable|integer|min:1',
             'special_request' => 'nullable|string',
             'bukti_identitas' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'kode_kamar'      => 'required|exists:kamars,id',
@@ -53,14 +54,11 @@ class BookingController extends Controller
             'check_in'        => $request->check_in,
             'check_out'       => $request->check_out,
             'no_telp'         => $request->no_telp,
-            'jumlah_kamar'    => 1,
+            'jumlah_kamar'    => $request->jumlah_kamar ?? 1,
             'special_request' => $request->special_request,
             'bukti_identitas' => $buktiIdentitasPath,
             'kode_kamar'      => $request->kode_kamar,
         ]);
-
-        Kamar::where('id', $request->kode_kamar)
-            ->update(['status' => 'terisi']);
 
         return redirect()
             ->route('booking.payment', $pengunjung->id)
@@ -98,6 +96,7 @@ class BookingController extends Controller
             'check_in'              => 'nullable|date',
             'check_out'             => 'nullable|date|after:check_in',
             'jumlah_peserta'        => 'nullable|integer|min:1',
+            'jumlah_kamar'          => 'nullable|integer|min:1',
             'kebutuhan_snack'       => 'nullable|array',
             'kebutuhan_makan'       => 'nullable|array',
             'bukti_identitas'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -158,16 +157,13 @@ class BookingController extends Controller
             'check_in'              => $request->check_in,
             'check_out'             => $request->check_out,
             'jumlah_peserta'        => $request->jumlah_peserta ?? 1,
-            'jumlah_kamar'          => 1,
+            'jumlah_kamar'          => $request->jumlah_kamar ?? 1,
             'special_request'       => $request->special_request,
             'kebutuhan_snack'       => json_encode($snackData),
             'kebutuhan_makan'       => json_encode($makanData),
             'bukti_identitas'       => $buktiIdentitasPath,
             'kode_kamar'            => $request->kode_kamar,
         ]);
-
-        Kamar::where('id', $request->kode_kamar)
-            ->update(['status' => 'terisi']);
 
         return redirect()
             ->route('booking.payment', $pengunjung->id)

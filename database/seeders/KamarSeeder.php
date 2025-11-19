@@ -37,7 +37,7 @@ class KamarSeeder extends Seeder
         // Gedung Kuning - Deluxe 2 kamar
         for ($i = 1; $i <= 2; $i++) {
             $kamars[] = [
-                    'kode_kamar' => sprintf('KUN-DLX-%02d', $i),
+                'kode_kamar' => sprintf('KUN-DLX-%02d', $i),
                 'jenis_kamar' => 'Deluxe',
                 'gedung' => 'Gedung Kuning',
                 'harga' => 275000,
@@ -49,7 +49,7 @@ class KamarSeeder extends Seeder
         // Student room Non AC Gedung Hijau - 35 kamar
         for ($i = 1; $i <= 35; $i++) {
             $kamars[] = [
-                    'kode_kamar' => sprintf('GH-NONAC-%02d', $i),
+                'kode_kamar' => sprintf('GH-NONAC-%02d', $i),
                 'jenis_kamar' => 'Student Non AC',
                 'gedung' => 'Gedung Hijau',
                 'harga' => 150000,
@@ -61,7 +61,7 @@ class KamarSeeder extends Seeder
         // Student room Gedung Hijau - AC 9 kamar
         for ($i = 1; $i <= 9; $i++) {
             $kamars[] = [
-                    'kode_kamar' => sprintf('GH-AC-%02d', $i),
+                'kode_kamar' => sprintf('GH-AC-%02d', $i),
                 'jenis_kamar' => 'Student AC',
                 'gedung' => 'Gedung Hijau',
                 'harga' => 200000,
@@ -73,7 +73,7 @@ class KamarSeeder extends Seeder
         // Student room Gedung Hijau - Non AC 32 kamar
         for ($i = 1; $i <= 32; $i++) {
             $kamars[] = [
-                    'kode_kamar' => sprintf('GH-NONAC2-%02d', $i),
+                'kode_kamar' => sprintf('GH-NONAC2-%02d', $i),
                 'jenis_kamar' => 'Student Non AC',
                 'gedung' => 'Gedung Hijau',
                 'harga' => 150000,
