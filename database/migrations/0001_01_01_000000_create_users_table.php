@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
+            // ✅ Tambahkan kolom role di sini
+            $table->string('role')->default('user'); 
+            // nilai default-nya "user", nanti seeder admin akan isi "admin"
+
             $table->rememberToken();
             $table->timestamps();
         });

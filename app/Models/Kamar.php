@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kamar extends Model
 {
     use HasFactory;
-    protected $table = 'kamars';
-
-    protected $fillable = ['kode_kamar','jenis_kamar','gedung','harga','fasilitas','status','foto'];
+    protected $fillable = ['kode_kamar','jenis_kamar','gedung','harga','fasilitas','status'];
 
     /**
      * Check availability for this room between two dates (inclusive)

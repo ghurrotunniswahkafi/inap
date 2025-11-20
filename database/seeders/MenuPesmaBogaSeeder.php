@@ -15,7 +15,7 @@ class MenuPesmaBogaSeeder extends Seeder
             ['nama_menu' => 'Kue Kering (per box)', 'jenis' => 'snack', 'harga' => 15000, 'deskripsi' => 'Kue kering assorted', 'tersedia' => true],
             ['nama_menu' => 'Pisang Goreng (per porsi)', 'jenis' => 'snack', 'harga' => 8000, 'deskripsi' => 'Pisang goreng crispy', 'tersedia' => true],
             ['nama_menu' => 'Teh/Kopi (per cangkir)', 'jenis' => 'snack', 'harga' => 3000, 'deskripsi' => 'Minuman hangat', 'tersedia' => true],
-
+            
             // Meal items
             ['nama_menu' => 'Nasi Box Standar', 'jenis' => 'makan', 'harga' => 20000, 'deskripsi' => 'Nasi putih + lauk + sayur', 'tersedia' => true],
             ['nama_menu' => 'Nasi Box Premium', 'jenis' => 'makan', 'harga' => 30000, 'deskripsi' => 'Nasi putih + lauk premium + sayur + buah', 'tersedia' => true],
